@@ -2,6 +2,8 @@ import React, { useState, useCallback, useMemo } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import useInput from "../hooks/useInput";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -12,17 +14,20 @@ const FormWrapper = styled(Form)`
 `;
 
 const LoginForm = ({ setIsLoggedIn }) => {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [id, onChangeId] = useInput("");
+  const [password, onChangePassword] = useInput("");
 
-  //component의 props로 넘겨주는건 useCallback사용으로 최적화!
-  const onChangeId = useCallback((e) => {
-    setId(e.target.value);
-  }, []);
-  const onChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
-  //비슷한 코드는 커스텀 훅으로 ~~
+  //   const [id, setId] = useState("");
+  //   const [password, setPassword] = useState("");
+
+  //   //component의 props로 넘겨주는건 useCallback사용으로 최적화!
+  //   const onChangeId = useCallback((e) => {
+  //     setId(e.target.value);
+  //   }, []);
+  //   const onChangePassword = useCallback((e) => {
+  //     setPassword(e.target.value);
+  //   }, []);
+  //   //비슷한 코드는 커스텀 훅으로 ~~
 
   const onsubmitForm = useCallback(() => {
     //e.prventDefault(); antd는 이거 이미 적용되어 있음
@@ -63,4 +68,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
   );
 };
 
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
+};
 export default LoginForm;
