@@ -9,8 +9,11 @@
   "author": "Amin",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^4.5.0",
+    "antd": "^4.13.0",
     "next": "^9.5.5",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "eslint": "^7.21.0",
