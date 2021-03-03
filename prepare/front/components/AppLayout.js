@@ -4,9 +4,15 @@ import Link from "next/link";
 import { Menu, Input, Row, Col } from "antd";
 import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
+import styled from "styled-components";
+
+//antd styledComponent
+const SearchInput = styled(Input.Search)`
+  vertical-align: middle;
+`;
 
 const AppLayout = ({ children }) => {
-  //아직 data가 없기 때문에 state 사용
+  //아직 data가 없기 때문에 dummy사용
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -23,7 +29,8 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item>
-          <Input.Search enterButton style={{ verticalAlign: "middle" }} />
+          <SearchInput enterButton />
+          {/* <Input.Search enterButton style={{ verticalAlign: "middle" }} /> */}
         </Menu.Item>
         <Menu.Item>
           <Link href="/signup">
@@ -33,7 +40,11 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {isLoggedIn ? (
+            <UserProfile setIsLoggedIn={setIsLoggedIn} />
+          ) : (
+            <LoginForm setIsLoggedIn={setIsLoggedIn} />
+          )}
         </Col>
         <Col xs={24} md={12}>
           {" "}
