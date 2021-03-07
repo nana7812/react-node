@@ -20,7 +20,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
   //   const [id, setId] = useState("");
   //   const [password, setPassword] = useState("");
 
-  //   //component의 props로 넘겨주는건 useCallback사용으로 최적화!
   //   const onChangeId = useCallback((e) => {
   //     setId(e.target.value);
   //   }, []);
