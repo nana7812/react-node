@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { Menu, Input, Row, Col } from "antd";
 import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
 import styled from "styled-components";
-
+import { useSelector } from "react-redux";
 //antd styledComponent
 const SearchInput = styled(Input.Search)`
   vertical-align: middle;
@@ -13,7 +13,10 @@ const SearchInput = styled(Input.Search)`
 
 const AppLayout = ({ children }) => {
   //아직 data가 없기 때문에 dummy사용
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //이제 중앙 저장소  사용하기 때문에 useState 컴포넌트 별로 관리 할 필요 없음
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  //is LoggedIN 바뀌면 알아서 리 렌더링
 
   return (
     <div>
@@ -40,11 +43,7 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? (
-            <UserProfile setIsLoggedIn={setIsLoggedIn} />
-          ) : (
-            <LoginForm setIsLoggedIn={setIsLoggedIn} />
-          )}
+          {isLoggedIn ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {" "}
