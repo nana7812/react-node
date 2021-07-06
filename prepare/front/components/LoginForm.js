@@ -5,7 +5,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import useInput from "../hooks/useInput";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../reducers";
+import { loginAction } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -16,7 +16,6 @@ const FormWrapper = styled(Form)`
 `;
 
 const LoginForm = () => {
-  //stor.dispatch랑 비슷
   const dispatch = useDispatch();
   const [id, onChangeId] = useInput("");
   const [password, onChangePassword] = useInput("");
@@ -35,7 +34,7 @@ const LoginForm = () => {
   const onsubmitForm = useCallback(() => {
     //e.prventDefault(); antd는 이거 이미 적용되어 있음
     console.log(id, password);
-    dispatch(loginAction(id, password));
+    dispatch(loginAction({ id, password }));
   }, [id, password]);
 
   return (

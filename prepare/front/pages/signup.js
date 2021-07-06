@@ -4,12 +4,14 @@ import AppLayout from "../components/AppLayout";
 import { Form, Input, Checkbox, Button } from "antd";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
+import { useDispatch } from "react-redux";
 
 const ErrorMessage = styled.div`
   color: red;
 `;
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const [id, onChangeId] = useInput("");
   const [nickname, onChangeNickname] = useInput("");
 
