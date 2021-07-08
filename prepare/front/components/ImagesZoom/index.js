@@ -18,14 +18,14 @@ const ImagesZoom = ({ images, onClose }) => {
     <Overlay>
       <Global />
       <Header>
-        <h1>상세 이미지</h1>
+        <h1>상세 이미지 </h1>
         <CloseBtn onClick={onClose} />
       </Header>
       <SlickWrapper>
         <div>
           <Slick
             initialSlide={0}
-            beforeChange={(slide) => setCurrentSlide(slide)}
+            beforeChange={(slide, newSlide) => setCurrentSlide(newSlide)}
             infinite
             arrows={false}
             slidesToShow={1}
@@ -53,7 +53,7 @@ ImagesZoom.propTypes = {
     PropTypes.shape({
       src: PropTypes.string,
     })
-  ).isRequried,
+  ).isRequired,
   onClose: PropTypes.func.isRequried,
 };
 
