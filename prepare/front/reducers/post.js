@@ -6,7 +6,7 @@ export const initialState = {
         id: 1,
         nickname: "아민",
       },
-      content: "첫 번째 게시글 #해시태그 # 익스프레스",
+      content: "첫 번째 게시글 #해시태그 #익스프레스",
       Images: [
         {
           src:
@@ -53,7 +53,7 @@ const dummpyPost = {
     id: 2,
     nickname: "더미",
   },
-  content: "더미 데이터 게시글 #해시태그 # 익스프레스",
+  content: "더미 데이터 게시글 #해시태그 #익스프레스",
   Images: [
     {
       src:
