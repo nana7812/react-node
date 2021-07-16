@@ -1,20 +1,27 @@
 import { Button, Form, Input } from "antd";
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../reducers/post";
+import useInput from "../hooks/useInput";
+import { addPostRequestAction } from "../reducers/post";
 
 const PostForm = () => {
   const dispatch = useDispatch();
-  const imageInput = useRef();
-  const { imagePaths } = useSelector((state) => state.post);
-  const [text, setText] = useState("");
-  const onChangeText = useCallback((e) => {
-    setText(e.target.value);
-  }, []);
+  const { imagePaths, addPostDone } = useSelector((state) => state.post);
+  const [text, onChangeText, setText] = useInput("");
+
+  //아래 주석 부분 말고 여기서 처리 해줘야함
+  useEffect(() => {
+    if (addPostDone) {
+      setText("");
+    }
+  }, [addPostDone]);
+
   const onSubmit = useCallback(() => {
-    dispatch(addPost);
-    setText("");
-  }, []);
+    dispatch(addPostRequestAction(text));
+    //setText(''); //요청 보내고 나서 글자 지운다? 이렇게 하면 문제가 생기루 수있음 서버 쪽에서 문제가 생겨서 에러 생길 경우 처리 못할 경우 텍스트 지우면 안됨
+  }, [text]);
+
+  const imageInput = useRef();
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);

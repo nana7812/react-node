@@ -30,12 +30,7 @@ const Global = createGlobalStyle`
 `;
 
 const AppLayout = ({ children }) => {
-  //아직 data가 없기 때문에 dummy사용
-  //이제 중앙 저장소  사용하기 때문에 useState 컴포넌트 별로 관리 할 필요 없음
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.user);
-  //const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  //is LoggedIN 바뀌면 알아서 리 렌더링
+  const { me } = useSelector((state) => state.user);
 
   return (
     <div>
@@ -63,7 +58,7 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {" "}
