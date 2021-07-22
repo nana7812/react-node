@@ -1,157 +1,174 @@
+import shortId from "shortid";
+import faker from "faker";
+
+import produce from "../util/produce";
+
 export const initialState = {
-  mainPosts: [
-    {
-      id: 1,
+  mainPosts: [],
+  imagePaths: [],
+  hasMorePosts: true,
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: null,
+  addPostLoading: false,
+  addPostDone: false,
+  addPostError: null,
+  removePostLoading: false,
+  removePostDone: false,
+  removePostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
+};
+
+export const generateDummyPost = (number) =>
+  Array(number)
+    .fill()
+    .map(() => ({
+      id: shortId.generate(),
       User: {
-        id: 1,
-        nickname: "아민",
+        id: shortId.generate(),
+        nickname: faker.name.findName(),
       },
-      content: "첫 번째 게시글 #해시태그 #익스프레스",
+      content: faker.lorem.paragraph(),
       Images: [
         {
-          src:
-            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MDFfMTUg%2FMDAxNjI1MTE3MjY2NTgx.OWcyyjzjwEbXAITwROfEtSAR3c_3nwxAevS20PctNsgg.UK0xaxSiFeHEK-Fny5sKY7Cdv7yEOJCJ1-4NS4S_5VAg.PNG.hyup_365%2Fimage.png&type=a340",
-        },
-        {
-          src:
-            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA2MjlfNSAg%2FMDAxNjI0OTE2NjY1NDYz.zTYsJ2hiH43VwiR-oOTeNQc02L0gAtkOSoq3d4t_1Cwg.C3bHEXUT76chFki9OrXYf_6Tb8-D4C3DZlc-1sX1lNUg.PNG.dorun_lab%2FContents_Frame%25281080X1080%2529.png&type=a340",
-        },
-        {
-          src:
-            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160328_76%2F1eunnue_1459164099849AijQI_JPEG%2F%25C4%25B3%25B8%25AF%25C5%25CD_%25289%2529.jpg&type=sc960_832",
+          src: faker.image.image(),
         },
       ],
       Comments: [
         {
           User: {
-            nickname: "amin",
+            id: shortId.generate(),
+            nickname: faker.name.findName(),
           },
-          content: "우와 신기하다",
-        },
-        {
-          User: {
-            nickname: "am",
-          },
-          content: "우와 수요일",
+          content: faker.lorem.sentence(),
         },
       ],
-    },
-  ],
-  imagePaths: [],
-  addPostLoading: false,
-  addPostDone: false,
-  addPostError: null,
-};
+    }));
 
-const dummpyPost = {
-  id: 2,
-  User: {
-    id: 2,
-    nickname: "더미",
-  },
-  content: "더미 데이터 게시글 #해시태그 #익스프레스",
-  Images: [
-    {
-      src:
-        "https://postfiles.pstatic.net/MjAyMTAyMTZfMTE4/MDAxNjEzNDAxNDI0MDQ3.wE85KV2Oj0qDsCQcLzzkUX0te85iu9axBfv-u29f6Ggg.ZrCK2gsHTidwlEdGRNnLYeJf8T8td1CXwL7EgvHu6Uog.JPEG.zcjswkz0812/IMG_2683.jpg?type=w966",
-    },
-    {
-      src:
-        "https://postfiles.pstatic.net/MjAyMTAyMTZfMzAg/MDAxNjEzNDAxNDIyMjYy.iF1C2Htw4K1x70_BAubG32fodXAgY2GFdw3udMjlS5Eg.xsrMd6c9NqrpnMus02PkjtcSAvhTs8mWfv20BVlpTuEg.JPEG.zcjswkz0812/IMG_2640.jpg?type=w966",
-    },
-    {
-      src:
-        "https://postfiles.pstatic.net/MjAyMTAyMTZfMjM1/MDAxNjEzNDAxNDIxNTE4.x3yaMnKDCl0ZQ-7YNrxrF8RgqyhkkuU7DR5gDV_FF-Yg.c6EsGYqzXzMvEKM_vHbAbc7A0MeBIcLfC76wYvZz0t8g.JPEG.zcjswkz0812/IMG_2642.jpg?type=w966",
-    },
-  ],
-  Comments: [
-    {
-      User: {
-        nickname: "amin",
-      },
-      content: "더미신기하다",
-    },
-    {
-      User: {
-        nickname: "am",
-      },
-      content: "더미 수요일",
-    },
-  ],
-};
+export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
+export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
+export const LOAD_POSTS_FAILURE = "LOAD_POSTS_FAILURE";
 
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 
+export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
+export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
+export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+
 export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
 export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
 export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
-export const addPostRequestAction = (data) => {
-  return {
-    type: ADD_POST_REQUEST,
-    data: data,
-  };
-};
+export const addPost = (data) => ({
+  type: ADD_POST_REQUEST,
+  data,
+});
 
-export const addCommentRequestAction = (data) => {
-  return {
-    type: ADD_COMMENT_REQUEST,
-    data: data,
-  };
-};
+export const addComment = (data) => ({
+  type: ADD_COMMENT_REQUEST,
+  data,
+});
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_POST_REQUEST:
-      return {
-        ...state,
-        addPostLoading: true,
-        addPostDone: false,
-        addPostError: null,
-      };
-    case ADD_POST_SUCCESS:
-      return {
-        ...state,
-        mainPosts: [dummpyPost, ...state.mainPosts],
-        addPostLoading: false,
-        addPostDone: true,
-        addPostError: null,
-      };
-    case ADD_POST_FAILURE:
-      return {
-        ...state,
-        addPostLoading: false,
-        addPostDone: false,
-        addPostError: action.error,
-      };
+const dummyPost = (data) => ({
+  id: data.id,
+  content: data.content,
+  User: {
+    id: 1,
+    nickname: "제로초",
+  },
+  Images: [],
+  Comments: [],
+});
 
-    case ADD_COMMENT_REQUEST:
-      return {
-        ...state,
-        addCommentLoading: true,
-        addCommentDone: false,
-        addCommentError: null,
-      };
-    case ADD_COMMENT_SUCCESS:
-      return {
-        ...state,
-        addCommentLoading: false,
-        addCommentDone: true,
-        addCommentError: null,
-      };
-    case ADD_COMMENT_FAILURE:
-      return {
-        ...state,
-        addCommentLoading: false,
-        addCommentDone: false,
-        addCommentError: action.error,
-      };
-
-    default:
-      return state;
-  }
-};
+const dummyComment = (data) => ({
+  id: shortId.generate(),
+  content: data,
+  User: {
+    id: 1,
+    nickname: "제로초",
+  },
+});
+// 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수(불변성은 지키면서)
+const reducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case LOAD_POSTS_REQUEST:
+        draft.loadPostsLoading = true;
+        draft.loadPostsDone = false;
+        draft.loadPostsError = null;
+        break;
+      case LOAD_POSTS_SUCCESS:
+        draft.loadPostsLoading = false;
+        draft.loadPostsDone = true;
+        draft.mainPosts = action.data.concat(draft.mainPosts);
+        draft.hasMorePosts = draft.mainPosts.length < 50;
+        break;
+      case LOAD_POSTS_FAILURE:
+        draft.loadPostsLoading = false;
+        draft.loadPostsError = action.error;
+        break;
+      case ADD_POST_REQUEST:
+        draft.addPostLoading = true;
+        draft.addPostDone = false;
+        draft.addPostError = null;
+        break;
+      case ADD_POST_SUCCESS:
+        draft.addPostLoading = false;
+        draft.addPostDone = true;
+        draft.mainPosts.unshift(dummyPost(action.data));
+        break;
+      case ADD_POST_FAILURE:
+        draft.addPostLoading = false;
+        draft.addPostError = action.error;
+        break;
+      case REMOVE_POST_REQUEST:
+        draft.removePostLoading = true;
+        draft.removePostDone = false;
+        draft.removePostError = null;
+        break;
+      case REMOVE_POST_SUCCESS:
+        draft.removePostLoading = false;
+        draft.removePostDone = true;
+        draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data);
+        break;
+      case REMOVE_POST_FAILURE:
+        draft.removePostLoading = false;
+        draft.removePostError = action.error;
+        break;
+      case ADD_COMMENT_REQUEST:
+        draft.addCommentLoading = true;
+        draft.addCommentDone = false;
+        draft.addCommentError = null;
+        break;
+      case ADD_COMMENT_SUCCESS: {
+        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
+        post.Comments.unshift(dummyComment(action.data.content));
+        draft.addCommentLoading = false;
+        draft.addCommentDone = true;
+        break;
+        // const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+        // const post = { ...state.mainPosts[postIndex] };
+        // post.Comments = [dummyComment(action.data.content), ...post.Comments];
+        // const mainPosts = [...state.mainPosts];
+        // mainPosts[postIndex] = post;
+        // return {
+        //   ...state,
+        //   mainPosts,
+        //   addCommentLoading: false,
+        //   addCommentDone: true,
+        // };
+      }
+      case ADD_COMMENT_FAILURE:
+        draft.addCommentLoading = false;
+        draft.addCommentError = action.error;
+        break;
+      default:
+        break;
+    }
+  });
 
 export default reducer;

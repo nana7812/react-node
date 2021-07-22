@@ -1,31 +1,33 @@
+import { Avatar, Card, Button } from "antd";
 import React, { useCallback } from "react";
-import { Card, Avatar, Button } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutRequestAction } from "../reducers/user";
+import { useSelector, useDispatch } from "react-redux";
+
+import { LOG_OUT_REQUEST } from "../reducers/user";
 
 const UserProfile = () => {
-  const dispatch = useDispatch();
   const { me, logOutLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const onLogOut = useCallback(() => {
-    dispatch(logoutRequestAction());
+  const onLogout = useCallback(() => {
+    dispatch({
+      type: LOG_OUT_REQUEST,
+    });
   }, []);
 
   return (
     <Card
-      //리액트에서 배열 사용시 key 붙어야힘
       actions={[
         <div key="twit">
-          짹쨱
+          짹짹
           <br />
           {me.Posts.length}
         </div>,
-        <div key="followings">
+        <div key="following">
           팔로잉
           <br />
           {me.Followings.length}
         </div>,
-        <div key="followings">
+        <div key="follower">
           팔로워
           <br />
           {me.Followers.length}
@@ -36,8 +38,7 @@ const UserProfile = () => {
         avatar={<Avatar>{me.nickname[0]}</Avatar>}
         title={me.nickname}
       />
-      <Button onClick={onLogOut} loading={logOutLoading}>
-        {" "}
+      <Button onClick={onLogout} loading={logOutLoading}>
         로그아웃
       </Button>
     </Card>
