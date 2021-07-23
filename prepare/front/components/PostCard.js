@@ -85,7 +85,8 @@ const PostCard = ({ post }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
-        extra={<FollowButton post={post} />}
+        //오른쪽 상단에 팔로우 버튼 구현 //로그인 했을 떄만 팔로우 버튼 보이게
+        extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
