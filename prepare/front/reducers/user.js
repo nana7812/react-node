@@ -80,6 +80,7 @@ export const logoutRequestAction = () => ({
 });
 
 const reducer = (state = initialState, action) =>
+  //return produce임 (화살표 뒤에 바로 붙는건 리턴 생략 된 것)
   produce(state, (draft) => {
     switch (action.type) {
       case FOLLOW_REQUEST:
@@ -167,15 +168,15 @@ const reducer = (state = initialState, action) =>
         draft.changeNicknameError = action.error;
         break;
       case ADD_POST_TO_ME:
-        // draft.me.Posts.unshift({ id: action.data });
-        // break;
-        return {
-          ...state,
-          me: {
-            ...state.me,
-            Posts: [{ id: action.data }, ...state.me.Posts],
-          },
-        };
+        draft.me.Posts.unshift({ id: action.data });
+        break;
+      // return {
+      //   ...state,
+      //   me: {
+      //     ...state.me,
+      //     Posts: [{ id: action.data }, ...state.me.Posts],
+      //   },
+      // };
       case REMOVE_POST_OF_ME:
         draft.me.Posts = draft.me.Posts.filter((v) => v.id !== action.data);
         break;

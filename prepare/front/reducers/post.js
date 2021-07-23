@@ -1,7 +1,8 @@
 import shortId from "shortid";
 import faker from "faker";
 
-import produce from "../util/produce";
+import produce from "immer";
+//import produce from "../util/produce";
 
 export const initialState = {
   mainPosts: [],
@@ -21,6 +22,7 @@ export const initialState = {
   addCommentError: null,
 };
 
+//더미데이터
 export const generateDummyPost = (number) =>
   Array(number)
     .fill()
@@ -104,7 +106,7 @@ const reducer = (state = initialState, action) =>
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
-        draft.mainPosts = action.data.concat(draft.mainPosts);
+        draft.mainPosts = action.data.concat(draft.mainPosts); //10개씩 불러오기
         draft.hasMorePosts = draft.mainPosts.length < 50;
         break;
       case LOAD_POSTS_FAILURE:
@@ -145,7 +147,7 @@ const reducer = (state = initialState, action) =>
         draft.addCommentError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
+        const post = drft.mainPosts.find((v) => v.id === action.data.postId); //ㄱ게시글 찾기
         post.Comments.unshift(dummyComment(action.data.content));
         draft.addCommentLoading = false;
         draft.addCommentDone = true;

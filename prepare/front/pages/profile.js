@@ -9,6 +9,7 @@ import FollowList from "../components/FollowList";
 
 const Profile = () => {
   const { me } = useSelector((state) => state.user);
+  //로그인 안 됐으면 프로필 X
   useEffect(() => {
     if (!(me && me.id)) {
       Router.push("/");
